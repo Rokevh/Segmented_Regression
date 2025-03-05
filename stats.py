@@ -60,6 +60,7 @@ def slopes(df, group_list):
                 "end_date": end_date
                 }
             )
+        
     T.stop("Calculate slopes")
     return pd.DataFrame(slope_data)
     

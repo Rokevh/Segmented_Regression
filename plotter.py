@@ -11,7 +11,7 @@ epoch_df = pd.read_csv(epoch)
 print(performance_df)
 
 
-plot_org = "RBT"
+plot_org = "REM"
 plot_std = "28-day FDS"
 
 df_filtered = performance_df[
@@ -37,22 +37,21 @@ for _, row in epoch_df.iterrows():
         slope = row["slope"]
         start_date = row["start_date"]
         end_date = row["end_date"]
+        intercept = row["intercept"]
         tiering_status = row["Tiering Status"]
-
-        start_performance = df_filtered[
-            df_filtered["Ordinal"] == start_date
-        ]["Performance"]
+        
+        
 
         date_range = df_filtered.loc[
             (df_filtered["Ordinal"] >= start_date)
             & (df_filtered["Ordinal"] <= end_date)
         ]["Ordinal"]
-        print(type(date_range))
 
         plt.axvspan(start_date, end_date, color=tier_colors[tiering_status], alpha=0.3)
 
-        #y_range = [float(start_performance) + float(slope) * (float(x) - date_range.iat[1]) for x in date_range] # float(x) may cause issues in future
+        # Translate line of best fit using C_sub(0)/m. Consider saving this calc somewhere
+        y_range = [slope * (x + intercept/slope) for x in date_range] # float(x) may cause issues in future
         
-        #plt.plot(date_range, y_range, color=tier_colors[tiering_status])
+        plt.plot(date_range, y_range, color=tier_colors[tiering_status])
 
 plt.show()
