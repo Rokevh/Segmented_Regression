@@ -9,9 +9,11 @@ performance_df = pd.read_csv(performance)
 epoch_df = pd.read_csv(epoch)
 
 print(performance_df)
-
-
-plot_org = "REM"
+"""
+Currently placeholding user input. Would love to handle changing the graphs without 
+editing the source code
+"""
+plot_org = "RA7"
 plot_std = "28-day FDS"
 
 df_filtered = performance_df[
